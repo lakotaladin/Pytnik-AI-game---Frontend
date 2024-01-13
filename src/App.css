@@ -1,0 +1,391 @@
+body {
+  background-image: url('../src/images/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.tile
+{
+  fill: red;
+}
+
+
+.choose-avatar-container {
+  width: 30%;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  margin: 0% auto;
+  background-color: #000000;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  padding: 1%;
+  gap: 20px;
+  color: white;
+}
+
+
+.player
+{
+  fill:lightgoldenrodyellow;
+  transition: transform 500ms;
+}
+
+
+@keyframes jump
+{
+   0% 
+   {
+    scale:1;
+   }
+   50% 
+   {
+    scale: 2;
+   }
+   100% 
+   {
+    scale: 1;
+   }
+}
+
+.jumper
+{
+  animation: jump 1s;
+}
+.buttons-container
+{
+  text-align: center;
+  margin-top: 2rem;
+  flex-direction: column;
+  position: relative;
+  transition: all ease-in-out;
+  align-items: center;
+  
+
+}
+
+.btn button
+{
+  border-radius: 1rem;
+  background-color:silver;
+  color: black;
+}
+
+
+ .btn:hover + .details
+{
+  opacity: 1;
+    padding-bottom: 1rem;
+  
+}
+
+.btn + .details {
+  
+ 
+  width: 200px;
+  background-color: #89CFF0 ;
+  z-index: 4;
+  border-radius: 10px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  box-shadow: 2px 2px 4px rgba(78, 78, 78, 0.9);
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+  margin-bottom: 2rem;
+  width: 50%;
+  padding: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 1rem;
+}
+
+
+.details
+{
+  margin: auto;
+}
+
+.imgframe
+{
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  margin-top: 25px;
+}
+
+.kindofgame
+{
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.kindofgame button 
+{
+  margin-right: 1rem;
+  background-color: bisque;
+  border:1px solid grey;
+  transition-duration: 0.4s;
+}
+.button1:hover {
+  box-shadow: 0 16px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  
+}
+
+.imgframe img
+{
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+svg
+{
+ width: 500px;
+ height: 300px;
+ margin-top: 0%;
+border: 3px solid black;
+}
+
+.imgfield
+{
+  border: 1px solid black;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 2px;
+
+}
+
+.imgfield img{
+  width: 60px;
+  height: 60px;
+}
+
+.fields
+{
+  display: flex;
+  margin-left: 550px;
+}
+
+.fields button
+{
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 30px;
+}
+
+.tile {
+  fill: red;
+}
+ 
+.player {
+  fill: lightgoldenrodyellow;
+  transition: transform 500ms;
+}
+
+.playerP {
+  fill: lightgoldenrodyellow;
+  transition: transform 700ms;
+}
+
+
+
+.dest
+
+{
+  transition: transform 500ms;
+
+}
+.cena
+{
+  display: flex;
+  justify-content: center;
+}
+.selected {
+  outline: 2px solid black;
+}
+ 
+.opt-container {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+  margin-right: 100px;
+}
+ 
+.option {
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  
+}
+ 
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 2rem;}
+
+.dugme 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  
+
+}
+
+.dugme :last-child
+{
+  margin-left: 5px;
+}
+
+.dugme :first-child
+{
+  margin-right: 5px;
+}
+
+
+.buttons-container
+{
+  justify-content: center;
+}
+.brojIgraca
+{
+  gap:10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.brojIgraca button
+{
+  height: 20px;
+  margin-top: 15px;
+}
+
+.brojIgraca button:hover
+{
+  background-color: rgb(199, 78, 78);
+}
+
+/* Background image */
+.slika {
+  background-image: url('/src/images/terrain.png');
+  width: 1080px; 
+  height: 600px; 
+  border: 10px solid black;
+}
+
+/* Stilizacija za grupu dugmadi */
+.button-group {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  gap: 10px;
+  margin-top:50px;
+}
+
+/* Stilizacija za pojedinačna dugmad */
+.button-group button {
+  background-color: gold;
+  font-size: 20px;
+  border: 10px solid black;
+  border-bottom: none;
+  color: black;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button-group button:hover {
+  background-color: gold;
+  font-size: 20px;
+  border: 10px solid black;
+  border-bottom: none;
+  color: black;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.agent-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.agent-container {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.agent-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.agent-content:hover {
+  box-shadow: 0 0 10px rgba(183, 38, 38, 0.5);
+}
+
+.agent-info {
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  display: none;
+  white-space: normal;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.agent-container.selected .agent-info {
+  display: block;
+}
+
+
+.coin-image {
+  width: 65px;
+  height: 65px;
+  animation: bounce 2s infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.ri-restart-line {
+  font-size: 20px;
+  color: black;
+  transform: scale(1.5);
+}
+
+
