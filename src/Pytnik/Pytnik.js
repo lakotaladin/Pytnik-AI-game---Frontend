@@ -10,7 +10,7 @@ import novcic from "../images/coin.png";
 import skloninovcic from "../images/collected_coin.png";
 import "../App.css";
 import axios from "axios";
-import MatricaCena from "./MatricaCena";
+import playsound from '../Sound/coin_drop.wav'
 
 const agents = [
   {
@@ -145,7 +145,7 @@ const Pytnik = () => {
 
       // Postavite novčić na odabrane indekse matrice
       if (xIndex >= 0 && xIndex < width && yIndex >= 0 && yIndex < height) {
-        placeGold(xIndex, yIndex);
+        placeGold(xIndex, yIndex, play());
 
         const newTiles = [...tiles];
         const index = xIndex + yIndex * width;
@@ -232,6 +232,10 @@ const Pytnik = () => {
       fetchPathFromBackend();
     }
   };
+
+  function play() {
+    new Audio(playsound).play();
+}
 
   return (
     <>
