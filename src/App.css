@@ -105,6 +105,83 @@ body {
 }
 
 
+.box {
+  width: 150px;
+  height: 60px;
+  text-align: center;
+}
+
+.avatar-info {
+  font-size: 14px;
+  padding: 0%;
+  margin: 0%;
+  color: #fff;
+  text-decoration: none;
+  cursor: help !important;
+  transition: all 0.3s ease-out;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  z-index: 9999999999;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: gold;
+  color: black;
+  border: 10px solid black;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+
 .details
 {
   margin: auto;
@@ -334,15 +411,12 @@ border: 3px solid black;
 
 .agent-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out;
 }
 
-.agent-content:hover {
-  box-shadow: 0 0 10px rgba(183, 38, 38, 0.5);
-}
+
 
 .agent-info {
   position: absolute;
