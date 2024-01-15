@@ -10,7 +10,8 @@ import novcic from "../images/coin.png";
 import skloninovcic from "../images/collected_coin.png";
 import "../App.css";
 import axios from "axios";
-import playsound from '../Sound/coin_drop.wav'
+import playsound from "../Sound/coin_drop.wav";
+import collect_coin from "../Sound/collected_coin.wav";
 
 const agents = [
   {
@@ -42,6 +43,8 @@ const agents = [
 const Pytnik = () => {
   const [width, setWidth] = useState(10);
   const [height, setHeight] = useState(11);
+  const [avatarSteps, setAvatarSteps] = useState([]);
+const [selectedPathCost, setSelectedPathCost] = useState(0);
 
   const [tiles, setTiles] = useState([
     1, 2, 1, 3, 4, 2, 2, 5, 3, 2, 2, 3, 1, 4, 2, 2, 5, 1, 3, 5, 4, 5, 2, 1, 2,
@@ -97,6 +100,8 @@ const Pytnik = () => {
       setGoldPositionsCombined([]);
       setSelectedAgentId(null);
       setIsGameReset(false);
+      setAvatarSteps([]);
+      setSelectedPathCost(0);
     }
   }, [isGameReset]);
 
@@ -156,6 +161,25 @@ const Pytnik = () => {
   };
 
   // Connected with BACKEND
+  // const fetchPathFromBackend = async () => {
+  //   try {
+  //     const response = await axios.post(process.env.REACT_APP_BACKEND_API, {
+  //       tiles: tiles,
+  //       playerx: playerX,
+  //       playery: playerY,
+  //       player_type: agents[agent - 1].name,
+  //       gold_positions: goldPositionsCombined,
+  //     });
+
+  //     setPath(response.data.path);
+  //     setPathAgain(response.data.path);
+  //     setEditorMode((e) => !e);
+  //   } catch (error) {
+  //     console.error("Greška pri dohvaćanju putanje s backenda", error);
+  //     console.log(error);
+  //   }
+  // };
+
   const fetchPathFromBackend = async () => {
     try {
       const response = await axios.post(process.env.REACT_APP_BACKEND_API, {
@@ -165,21 +189,61 @@ const Pytnik = () => {
         player_type: agents[agent - 1].name,
         gold_positions: goldPositionsCombined,
       });
-
+  
       setPath(response.data.path);
       setPathAgain(response.data.path);
       setEditorMode((e) => !e);
+  
+      // setSelectedPath(response.data.path);
+      setSelectedPathCost(response.data.matrixCost);
+
+      // console.log("Selected Path:", selectedPath);
+// console.log("Selected Path Cost:", selectedPath);
+// console.log("Matrix cost:", response.data.matrixCost);
     } catch (error) {
       console.error("Greška pri dohvaćanju putanje s backenda", error);
       console.log(error);
     }
   };
 
+  function collect_coin_sound() {
+    new Audio(collect_coin).play();
+  }
+
+  // useEffect(() => {
+  //   if (editorMode === true) return;
+
+  //   let pathIdx = 0;
+  //   let stepIdx = 0;
+  //   const interval = setInterval(() => {
+  //     if (!path[pathIdx] || !path[pathIdx][stepIdx]) {
+  //       console.log("No more steps in path");
+  //       clearInterval(interval);
+  //       return;
+  //     }
+
+  //     const [x, y] = path[pathIdx][stepIdx];
+  //     // console.log(`Moving to: x=${x}, y=${y}`);
+  //     setPlayerX(y);
+  //     setPlayerY(x);
+  //     stepIdx++;
+
+  //     if (stepIdx === path[pathIdx].length) {
+  //       pathIdx++;
+  //       stepIdx = 0;
+  //     }
+  //   }, 280);
+
+  //   return () => clearInterval(interval);
+  // }, [editorMode === true]);
+
   useEffect(() => {
     if (editorMode === true) return;
 
     let pathIdx = 0;
     let stepIdx = 0;
+    const steps = [];
+
     const interval = setInterval(() => {
       if (!path[pathIdx] || !path[pathIdx][stepIdx]) {
         console.log("No more steps in path");
@@ -188,7 +252,7 @@ const Pytnik = () => {
       }
 
       const [x, y] = path[pathIdx][stepIdx];
-      console.log(`Moving to: x=${x}, y=${y}`);
+      steps.push({ x, y });
       setPlayerX(y);
       setPlayerY(x);
       stepIdx++;
@@ -199,12 +263,10 @@ const Pytnik = () => {
       }
     }, 280);
 
+    setAvatarSteps(steps);
+
     return () => clearInterval(interval);
   }, [editorMode === true]);
-
-  useEffect(() => {
-    console.log(goldPositionsCombined, "ovo je gold positions combined");
-  }, [goldPositionsCombined]);
 
   useEffect(() => {
     // Prođi kroz sve novčiće
@@ -220,7 +282,7 @@ const Pytnik = () => {
             index === i ? { ...item, collected: true } : item
           )
         );
-
+        collect_coin_sound();
         // Prekini petlju
         break;
       }
@@ -235,7 +297,7 @@ const Pytnik = () => {
 
   function play() {
     new Audio(playsound).play();
-}
+  }
 
   return (
     <>
@@ -366,7 +428,7 @@ const Pytnik = () => {
                         }px, ${(position[1] * 600) / height}px)`,
                       }}
                       x={1000 / width / 24}
-                      y={600 / height / 20+13}
+                      y={600 / height / 20 + 13}
                       width="100"
                       height="100"
                       href={image}
@@ -377,9 +439,9 @@ const Pytnik = () => {
                           (position[0] * 1000) / width
                         }px, ${(position[1] * 600) / height}px)`,
                       }}
-                      x={1000 / width / 24 + 50} // x-coordinate for the center of the coin
-                      y={600 / height / 20 + 70} // y-coordinate for the center of the coin
-                      textAnchor="middle" // Center the text horizontally
+                      x={1000 / width / 24 + 50} 
+                      y={600 / height / 20 + 70} 
+                      textAnchor="middle" 
                       fontSize="20"
                       fill="black"
                     >
@@ -418,18 +480,23 @@ const Pytnik = () => {
             </svg>
           </div>
         </div>
-        <div className="w-25 p-0 m-0 bg-black justify-content-between">
-          <div>
+        <div className="stats-div w-25 p-0 m-0 bg-black justify-content-between">
+          <div className="steps-container p-0 m-0 w-100">
             <h3 className="text-center text-success">
-              ========== Steps =========={" "}
+              ========== Steps =========
             </h3>
-            <h1 className="text-center text-success">...</h1>
+            {avatarSteps.map((step, index) => (
+              <p key={index} className="text-start p-2 text-success">
+                Step {index + 1}: X: {step.x}, Y: {step.y}
+              </p>
+            ))}
+            {/* <h1 className="text-center text-success">...{goldPositionsCombined}</h1> */}
           </div>
           <div>
             <h4 className="text-center text-success">
               ============================
             </h4>
-            <h3 className="text-start text-success p-1">Cost: 0</h3>
+            <h4 className="text-start text-success p-1">Cost: {selectedPathCost}</h4>
           </div>
         </div>
       </div>

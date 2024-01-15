@@ -8,7 +8,7 @@ function App() {
 
     <Routes>
     <Route path="/" element={<Pytnik/>}></Route>
-    <Route path='/**' element={<p>404</p>}></Route>
+    <Route path='/*/*' element={<p>404</p>}></Route>
     </Routes>
 
   );

@@ -27,6 +27,19 @@ body {
 }
 
 
+.stats-div {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.steps-container {
+  height: 800px;
+  overflow-y: scroll;
+}
+
+
+
 .player
 {
   fill:lightgoldenrodyellow;

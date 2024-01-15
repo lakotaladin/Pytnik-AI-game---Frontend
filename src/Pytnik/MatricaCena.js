@@ -1,6 +1,7 @@
 import React from "react";
 
 const MatricaCena = ({ cenaMatrix }) => {
+  
   return (
     <table>
       <thead>
