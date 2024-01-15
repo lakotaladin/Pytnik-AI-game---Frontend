@@ -10,6 +10,7 @@ import novcic from "../images/coin.png";
 import skloninovcic from "../images/collected_coin.png";
 import "../App.css";
 import axios from "axios";
+import MatricaCena from "./MatricaCena";
 
 const agents = [
   {
@@ -111,7 +112,7 @@ const Pytnik = () => {
 
   const keyPress = useCallback(
     (e) => {
-      if (e.key === "Enter") {
+      if (e.keyCode === 13) {
         setEditorMode((e) => !e);
       }
     },
@@ -127,17 +128,6 @@ const Pytnik = () => {
     setAgent(agentId);
     setSelectedAgent(agentId);
   };
-
-  const [selectedBottomAgent, setSelectedBottomAgent] = useState(null);
-
-  function selectTile(idx) {
-    if (!editorMode) return;
-    if (selectedTile === idx) {
-      setSelectedTile(null);
-    } else {
-      setSelectedTile(idx);
-    }
-  }
 
   const handleSvgClick = (e) => {
     if (isPlacingCoins) {
@@ -238,7 +228,7 @@ const Pytnik = () => {
   }, [playerX, playerY]);
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.keyPress === 13) {
       fetchPathFromBackend();
     }
   };
@@ -372,12 +362,17 @@ const Pytnik = () => {
                         }px, ${(position[1] * 600) / height}px)`,
                       }}
                       x={1000 / width / 24}
-                      y={600 / height / 20}
+                      y={600 / height / 20+13}
                       width="100"
                       height="100"
                       href={image}
                     />
                     <text
+                      style={{
+                        transform: `translate(${
+                          (position[0] * 1000) / width
+                        }px, ${(position[1] * 600) / height}px)`,
+                      }}
                       x={1000 / width / 24 + 50} // x-coordinate for the center of the coin
                       y={600 / height / 20 + 70} // y-coordinate for the center of the coin
                       textAnchor="middle" // Center the text horizontally
@@ -424,7 +419,7 @@ const Pytnik = () => {
             <h3 className="text-center text-success">
               ========== Steps =========={" "}
             </h3>
-            <h1 className="text-center text-success">steps...</h1>
+            <h1 className="text-center text-success">...</h1>
           </div>
           <div>
             <h4 className="text-center text-success">
