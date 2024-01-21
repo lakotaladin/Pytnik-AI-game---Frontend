@@ -55,26 +55,21 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
   ]);
   const [playerX, setPlayerX] = useState(0);
   const [playerY, setPlayerY] = useState(0);
-
   const [destX, setDestX] = useState(0);
   const [destY, setDestY] = useState(0);
-
   const [editorMode, setEditorMode] = useState(true);
   const [selectedTile, setSelectedTile] = useState(null);
   const [pathAgain, setPathAgain] = useState([]);
-
   const [agent, setAgent] = useState(1);
-
   const [path, setPath] = useState([{ x: 0, y: 0 }]);
-
   const [goldPositions, setGoldPositions] = useState(0);
   const [goldPositions2, setGoldPositions2] = useState(0);
-
   const [goldPositionsCombined, setGoldPositionsCombined] = useState([]);
-
   const [selectedAgentId, setSelectedAgentId] = useState(null);
-
   const [isGameReset, setIsGameReset] = useState(false);
+
+
+
 
   useEffect(() => {
     if (isGameReset) {
@@ -114,21 +109,8 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
     setCoinOrder((order) => [...order, goldPositionsCombined.length + 1]);
   };
   const [isPlacingCoins, setIsPlacingCoins] = useState(false);
-
-  const keyPress = useCallback(
-    (e) => {
-      if (e.keyCode === 13) {
-        setEditorMode((e) => !e);
-      }
-    },
-    [setEditorMode]
-  );
-
-  useEffect(() => {
-    document.addEventListener("keypress", keyPress);
-  }, [keyPress]);
-
   const [selectedAgent, setSelectedAgent] = useState(null);
+
   const handleAgentClick = (agentId) => {
     setAgent(agentId);
     setSelectedAgent(agentId);
@@ -160,26 +142,7 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
     }
   };
 
-  // Connected with BACKEND
-  // const fetchPathFromBackend = async () => {
-  //   try {
-  //     const response = await axios.post(process.env.REACT_APP_BACKEND_API, {
-  //       tiles: tiles,
-  //       playerx: playerX,
-  //       playery: playerY,
-  //       player_type: agents[agent - 1].name,
-  //       gold_positions: goldPositionsCombined,
-  //     });
-
-  //     setPath(response.data.path);
-  //     setPathAgain(response.data.path);
-  //     setEditorMode((e) => !e);
-  //   } catch (error) {
-  //     console.error("Greška pri dohvaćanju putanje s backenda", error);
-  //     console.log(error);
-  //   }
-  // };
-
+  // BACKEND
   const fetchPathFromBackend = async () => {
     try {
       const response = await axios.post(process.env.REACT_APP_BACKEND_API, {
@@ -197,9 +160,6 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
       // setSelectedPath(response.data.path);
       setSelectedPathCost(response.data.matrixCost);
 
-      // console.log("Selected Path:", selectedPath);
-// console.log("Selected Path Cost:", selectedPath);
-// console.log("Matrix cost:", response.data.matrixCost);
     } catch (error) {
       console.error("Greška pri dohvaćanju putanje s backenda", error);
       console.log(error);
@@ -209,33 +169,7 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
   function collect_coin_sound() {
     new Audio(collect_coin).play();
   }
-
-  // useEffect(() => {
-  //   if (editorMode === true) return;
-
-  //   let pathIdx = 0;
-  //   let stepIdx = 0;
-  //   const interval = setInterval(() => {
-  //     if (!path[pathIdx] || !path[pathIdx][stepIdx]) {
-  //       console.log("No more steps in path");
-  //       clearInterval(interval);
-  //       return;
-  //     }
-
-  //     const [x, y] = path[pathIdx][stepIdx];
-  //     // console.log(`Moving to: x=${x}, y=${y}`);
-  //     setPlayerX(y);
-  //     setPlayerY(x);
-  //     stepIdx++;
-
-  //     if (stepIdx === path[pathIdx].length) {
-  //       pathIdx++;
-  //       stepIdx = 0;
-  //     }
-  //   }, 280);
-
-  //   return () => clearInterval(interval);
-  // }, [editorMode === true]);
+  
 
   useEffect(() => {
     if (editorMode === true) return;
@@ -246,7 +180,6 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
 
     const interval = setInterval(() => {
       if (!path[pathIdx] || !path[pathIdx][stepIdx]) {
-        console.log("No more steps in path");
         clearInterval(interval);
         return;
       }
@@ -288,12 +221,6 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
       }
     }
   }, [playerX, playerY]);
-
-  const handleKeyPress = (event) => {
-    if (event.keyPress === 13) {
-      fetchPathFromBackend();
-    }
-  };
 
   function play() {
     new Audio(playsound).play();
@@ -391,7 +318,6 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
               <button
                 className="btn"
                 onClick={fetchPathFromBackend}
-                onKeyPress={handleKeyPress}
                 disabled={isPlacingCoins || goldPositionsCombined.length === 0}
               >
                 <VscDebugStart
