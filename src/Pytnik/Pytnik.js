@@ -145,7 +145,8 @@ const [selectedPathCost, setSelectedPathCost] = useState(0);
   // BACKEND
   const fetchPathFromBackend = async () => {
     try {
-      const response = await axios.post(process.env.REACT_APP_BACKEND_API, {
+      // const response = await axios.post('http://127.0.0.1:8000/pytnik', {
+      const response = await axios.post('https://pytnik-ai-game-backend.vercel.app/pytnik', {
         tiles: tiles,
         playerx: playerX,
         playery: playerY,
